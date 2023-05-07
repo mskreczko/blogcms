@@ -10,6 +10,7 @@ import pl.mskreczko.blogcms.application.ports.out.PostPort;
 import pl.mskreczko.blogcms.application.ports.out.UserPort;
 import pl.mskreczko.blogcms.infrastructure.config.uuid.UUIDProvider;
 
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Service
@@ -22,7 +23,7 @@ public class CommentService implements CreateCommentUseCase {
     private final UUIDProvider uuidProvider;
 
     @Override
-    public void createComment(UUID postId, UUID authorId, String content) {
+    public void createComment(UUID postId, UUID authorId, String content) throws NoSuchElementException {
         final var user = userPort.loadById(authorId).orElseThrow(NoSuchEntityException::new);
         final var post = postPort.loadById(postId).orElseThrow(NoSuchEntityException::new);
 

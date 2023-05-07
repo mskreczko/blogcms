@@ -10,6 +10,7 @@ import pl.mskreczko.blogcms.application.ports.out.PostPort;
 import pl.mskreczko.blogcms.application.ports.out.UserPort;
 import pl.mskreczko.blogcms.infrastructure.config.uuid.UUIDProvider;
 
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Service
@@ -22,7 +23,7 @@ public class PostService implements CreatePostUseCase {
     private final UUIDProvider uuidProvider;
     @Transactional
     @Override
-    public void createPost(UUID authorId, String title, String content) {
+    public void createPost(UUID authorId, String title, String content) throws NoSuchElementException {
         final var user = userPort.loadById(authorId).orElseThrow(NoSuchEntityException::new);
         Post post = new Post();
         post.setId(uuidProvider.getUUID());
