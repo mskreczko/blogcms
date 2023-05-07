@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.mskreczko.blogcms.application.domain.Post;
 import pl.mskreczko.blogcms.application.exceptions.NoSuchEntityException;
-import pl.mskreczko.blogcms.application.ports.in.CreatePostUseCase;
+import pl.mskreczko.blogcms.application.ports.in.post.CreatePostUseCase;
 import pl.mskreczko.blogcms.application.ports.out.PostPort;
 import pl.mskreczko.blogcms.application.ports.out.UserPort;
 import pl.mskreczko.blogcms.infrastructure.config.uuid.UUIDProvider;
@@ -15,7 +15,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class PostService implements CreatePostUseCase {
+class PostService implements CreatePostUseCase {
 
     private final PostPort postPort;
     private final UserPort userPort;

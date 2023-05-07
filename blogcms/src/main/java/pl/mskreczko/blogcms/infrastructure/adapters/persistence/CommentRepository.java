@@ -6,6 +6,7 @@ import pl.mskreczko.blogcms.application.domain.Comment;
 import pl.mskreczko.blogcms.application.ports.out.CommentPort;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Component
@@ -19,7 +20,18 @@ public class CommentRepository implements CommentPort {
         repository.save(comment);
     }
 
-    public List<Comment> loadCommentByPostId(UUID postId) {
+    @Override
+    public Optional<Comment> findById(UUID commentId) {
+        return repository.findById(commentId);
+    }
+
+    @Override
+    public List<Comment> findByPostId(UUID postId) {
         return repository.findAllByPostId(postId);
+    }
+
+    @Override
+    public void delete(Comment comment) {
+        repository.delete(comment);
     }
 }

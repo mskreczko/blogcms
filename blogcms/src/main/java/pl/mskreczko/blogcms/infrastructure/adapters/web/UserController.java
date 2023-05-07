@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.mskreczko.blogcms.application.exceptions.EntityAlreadyExistsException;
-import pl.mskreczko.blogcms.application.ports.in.CreateUserUseCase;
+import pl.mskreczko.blogcms.application.ports.in.user.CreateUserUseCase;
 import pl.mskreczko.blogcms.infrastructure.adapters.web.dto.NewUserDto;
 
 @RestController
@@ -24,7 +24,7 @@ public class UserController {
             createUserUseCase.createUser(newUserDto.username());
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (EntityAlreadyExistsException ex) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
         }
     }
 }

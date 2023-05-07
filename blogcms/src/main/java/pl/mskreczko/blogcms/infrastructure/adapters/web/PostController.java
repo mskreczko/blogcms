@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.mskreczko.blogcms.application.exceptions.NoSuchEntityException;
-import pl.mskreczko.blogcms.application.ports.in.CreatePostUseCase;
+import pl.mskreczko.blogcms.application.ports.in.post.CreatePostUseCase;
 import pl.mskreczko.blogcms.infrastructure.adapters.web.dto.NewPostDto;
 
 @RestController

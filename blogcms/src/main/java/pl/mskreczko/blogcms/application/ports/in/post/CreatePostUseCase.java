@@ -1,4 +1,4 @@
-package pl.mskreczko.blogcms.application.ports.in;
+package pl.mskreczko.blogcms.application.ports.in.post;
 
 import pl.mskreczko.blogcms.application.exceptions.NoSuchEntityException;
 

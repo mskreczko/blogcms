@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -27,6 +28,8 @@ public class Comment {
     private Post post;
 
     private String content;
+
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     public Comment(UUID id, User author, Post post, String content) {
         this.id = id;
