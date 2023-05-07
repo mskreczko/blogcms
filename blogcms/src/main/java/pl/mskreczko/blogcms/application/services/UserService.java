@@ -4,13 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.mskreczko.blogcms.application.domain.User;
 import pl.mskreczko.blogcms.application.exceptions.EntityAlreadyExistsException;
-import pl.mskreczko.blogcms.application.ports.in.CreateUserUseCase;
+import pl.mskreczko.blogcms.application.ports.in.user.CreateUserUseCase;
 import pl.mskreczko.blogcms.application.ports.out.UserPort;
 import pl.mskreczko.blogcms.infrastructure.config.uuid.UUIDProvider;
 
 @Service
 @RequiredArgsConstructor
-public class UserService implements CreateUserUseCase {
+class UserService implements CreateUserUseCase {
 
     private final UserPort userPort;
     private final UUIDProvider uuidProvider;
