@@ -13,4 +13,5 @@ public interface CommentPort {
     List<Comment> findByPostId(UUID postId);
 
     void delete(Comment comment);
+    void deleteByPostId(UUID postId);
 }

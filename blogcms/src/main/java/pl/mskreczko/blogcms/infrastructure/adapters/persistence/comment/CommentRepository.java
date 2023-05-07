@@ -1,4 +1,4 @@
-package pl.mskreczko.blogcms.infrastructure.adapters.persistence;
+package pl.mskreczko.blogcms.infrastructure.adapters.persistence.comment;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -33,5 +33,10 @@ public class CommentRepository implements CommentPort {
     @Override
     public void delete(Comment comment) {
         repository.delete(comment);
+    }
+
+    @Override
+    public void deleteByPostId(UUID postId) {
+        repository.deleteByPostId(postId);
     }
 }

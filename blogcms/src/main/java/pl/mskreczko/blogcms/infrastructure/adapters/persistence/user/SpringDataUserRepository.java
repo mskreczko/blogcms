@@ -1,4 +1,4 @@
-package pl.mskreczko.blogcms.infrastructure.adapters.persistence;
+package pl.mskreczko.blogcms.infrastructure.adapters.persistence.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import pl.mskreczko.blogcms.application.domain.User;

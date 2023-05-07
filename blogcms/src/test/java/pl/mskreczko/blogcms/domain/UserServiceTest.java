@@ -1,6 +1,7 @@
 package pl.mskreczko.blogcms.domain;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -10,7 +11,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import pl.mskreczko.blogcms.application.domain.User;
 import pl.mskreczko.blogcms.application.exceptions.EntityAlreadyExistsException;
 import pl.mskreczko.blogcms.application.ports.out.UserPort;
-import pl.mskreczko.blogcms.application.services.UserService;
+import pl.mskreczko.blogcms.application.services.user.UserConfiguration;
+import pl.mskreczko.blogcms.application.services.user.UserService;
 import pl.mskreczko.blogcms.infrastructure.config.uuid.UUIDProvider;
 
 import java.util.Optional;
@@ -24,7 +26,13 @@ public class UserServiceTest {
     @Mock
     private UUIDProvider uuidProvider;
     @InjectMocks
+    private UserConfiguration userConfiguration;
     private UserService userService;
+
+    @BeforeEach
+    void setup() {
+        userService = userConfiguration.userService();
+    }
 
     private final UUID TEST_ID = UUID.fromString("0000-00-00-00-000000");
 

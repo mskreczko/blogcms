@@ -1,12 +1,9 @@
-package pl.mskreczko.blogcms.application.services;
+package pl.mskreczko.blogcms.application.services.comment;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.mskreczko.blogcms.application.domain.Comment;
 import pl.mskreczko.blogcms.application.exceptions.NoSuchEntityException;
-import pl.mskreczko.blogcms.application.ports.in.comment.CreateCommentUseCase;
-import pl.mskreczko.blogcms.application.ports.in.comment.DeleteCommentUseCase;
-import pl.mskreczko.blogcms.application.ports.in.comment.GetCommentsByPostUseCase;
 import pl.mskreczko.blogcms.application.ports.out.CommentPort;
 import pl.mskreczko.blogcms.application.ports.out.PostPort;
 import pl.mskreczko.blogcms.application.ports.out.UserPort;
@@ -14,13 +11,12 @@ import pl.mskreczko.blogcms.infrastructure.adapters.web.dto.CommentDto;
 import pl.mskreczko.blogcms.infrastructure.config.uuid.UUIDProvider;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-class CommentService implements CreateCommentUseCase, DeleteCommentUseCase, GetCommentsByPostUseCase {
+class CommentServiceImpl implements CommentService {
 
     private final CommentPort commentPort;
     private final PostPort postPort;
@@ -28,7 +24,7 @@ class CommentService implements CreateCommentUseCase, DeleteCommentUseCase, GetC
     private final UUIDProvider uuidProvider;
 
     @Override
-    public void createComment(UUID postId, UUID authorId, String content) throws NoSuchElementException {
+    public void createComment(UUID postId, UUID authorId, String content) throws NoSuchEntityException {
         final var user = userPort.loadById(authorId).orElseThrow(NoSuchEntityException::new);
         final var post = postPort.loadById(postId).orElseThrow(NoSuchEntityException::new);
 

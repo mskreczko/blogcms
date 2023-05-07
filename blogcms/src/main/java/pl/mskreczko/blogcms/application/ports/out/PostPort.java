@@ -9,4 +9,5 @@ import java.util.UUID;
 public interface PostPort {
     void save(Post post);
     Optional<Post> loadById(UUID id) throws NoSuchEntityException;
+    void deleteById(UUID id);
 }
