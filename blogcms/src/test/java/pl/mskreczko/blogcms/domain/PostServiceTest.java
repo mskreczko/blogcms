@@ -11,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import pl.mskreczko.blogcms.application.domain.Post;
 import pl.mskreczko.blogcms.application.domain.User;
 import pl.mskreczko.blogcms.application.exceptions.NoSuchEntityException;
+import pl.mskreczko.blogcms.application.ports.out.CommentPort;
 import pl.mskreczko.blogcms.application.ports.out.PostPort;
 import pl.mskreczko.blogcms.application.ports.out.UserPort;
 import pl.mskreczko.blogcms.application.services.post.PostConfiguration;
@@ -28,6 +29,8 @@ public class PostServiceTest {
     private UserPort userPort;
     @Mock
     private UUIDProvider uuidProvider;
+    @Mock
+    private CommentPort commentPort;
     @InjectMocks
     private PostConfiguration postConfiguration;
     private PostService postService;
@@ -62,5 +65,28 @@ public class PostServiceTest {
         Mockito.verify(postPort).save(
                 new Post(TEST_ID, mockUser, "Test content", "Test title")
         );
+    }
+
+    @Test
+    void deletePost_throwsOnPostLookup() {
+        Mockito.when(postPort.loadById(TEST_ID))
+                .thenReturn(Optional.empty());
+
+        Assertions.assertThrows(NoSuchEntityException.class,
+                () -> postService.deletePost(TEST_ID)
+        );
+    }
+
+    @Test
+    void deletePost_deletesPost() {
+        final var mockUser = new User(TEST_ID, "test");
+        final var mockPost = new Post(TEST_ID, mockUser, "Test content", "Test title");
+        Mockito.when(postPort.loadById(TEST_ID))
+                .thenReturn(Optional.of(mockPost));
+        Mockito.doNothing().when(commentPort).deleteByPostId(TEST_ID);
+
+        postService.deletePost(TEST_ID);
+
+        Mockito.verify(postPort).deleteById(TEST_ID);
     }
 }
