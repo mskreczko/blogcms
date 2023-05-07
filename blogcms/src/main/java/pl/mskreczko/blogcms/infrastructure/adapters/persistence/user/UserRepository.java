@@ -1,9 +1,10 @@
-package pl.mskreczko.blogcms.infrastructure.adapters.persistence;
+package pl.mskreczko.blogcms.infrastructure.adapters.persistence.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.mskreczko.blogcms.application.domain.User;
 import pl.mskreczko.blogcms.application.ports.out.UserPort;
+import pl.mskreczko.blogcms.infrastructure.adapters.persistence.user.SpringDataUserRepository;
 
 import java.util.Optional;
 import java.util.UUID;

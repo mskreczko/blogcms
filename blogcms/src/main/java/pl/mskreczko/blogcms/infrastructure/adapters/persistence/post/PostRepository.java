@@ -1,4 +1,4 @@
-package pl.mskreczko.blogcms.infrastructure.adapters.persistence;
+package pl.mskreczko.blogcms.infrastructure.adapters.persistence.post;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -22,5 +22,10 @@ public class PostRepository implements PostPort {
     @Override
     public Optional<Post> loadById(UUID id) {
         return repository.findById(id);
+    }
+
+    @Override
+    public void deleteById(UUID id) {
+        repository.deleteById(id);
     }
 }
