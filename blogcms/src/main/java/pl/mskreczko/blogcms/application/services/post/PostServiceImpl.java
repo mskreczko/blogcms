@@ -8,9 +8,12 @@ import pl.mskreczko.blogcms.application.exceptions.NoSuchEntityException;
 import pl.mskreczko.blogcms.application.ports.out.CommentPort;
 import pl.mskreczko.blogcms.application.ports.out.PostPort;
 import pl.mskreczko.blogcms.application.ports.out.UserPort;
+import pl.mskreczko.blogcms.infrastructure.adapters.web.dto.CommentDto;
+import pl.mskreczko.blogcms.infrastructure.adapters.web.dto.PostDto;
 import pl.mskreczko.blogcms.infrastructure.config.uuid.UUIDProvider;
 
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -40,5 +43,15 @@ class PostServiceImpl implements PostService {
         }
         commentPort.deleteByPostId(postId);
         postPort.deleteById(postId);
+    }
+
+    @Override
+    public PostDto getPost(UUID postId) throws NoSuchEntityException {
+        final var post = postPort.loadById(postId).orElseThrow(NoSuchEntityException::new);
+        final var comments = commentPort.findByPostId(postId);
+
+        return new PostDto(post.getAuthor().getUsername(), post.getTitle(), post.getContent(),
+                comments.stream().map((comment) -> new CommentDto(comment.getAuthor().getUsername(),
+                        comment.getContent(), comment.getCreatedAt())).collect(Collectors.toList()));
     }
 }

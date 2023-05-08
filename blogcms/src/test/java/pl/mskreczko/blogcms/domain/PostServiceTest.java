@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import pl.mskreczko.blogcms.application.domain.Comment;
 import pl.mskreczko.blogcms.application.domain.Post;
 import pl.mskreczko.blogcms.application.domain.User;
 import pl.mskreczko.blogcms.application.exceptions.NoSuchEntityException;
@@ -18,6 +19,7 @@ import pl.mskreczko.blogcms.application.services.post.PostConfiguration;
 import pl.mskreczko.blogcms.application.services.post.PostService;
 import pl.mskreczko.blogcms.infrastructure.config.uuid.UUIDProvider;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -88,5 +90,31 @@ public class PostServiceTest {
         postService.deletePost(TEST_ID);
 
         Mockito.verify(postPort).deleteById(TEST_ID);
+    }
+
+    @Test
+    void getPost_throwsOnPostLookup() {
+        Mockito.when(postPort.loadById(TEST_ID))
+                .thenReturn(Optional.empty());
+
+        Assertions.assertThrows(NoSuchEntityException.class,
+                () -> postService.getPost(TEST_ID));
+    }
+
+    @Test
+    void getPost_returnsPostWithComments() {
+        final var mockUser = new User(TEST_ID, "test");
+        final var mockPost = new Post(TEST_ID, mockUser, "Test content", "Test title");
+        final var mockComment = new Comment(TEST_ID, mockUser, mockPost, "Test content");
+
+        Mockito.when(postPort.loadById(TEST_ID))
+                .thenReturn(Optional.of(mockPost));
+        Mockito.when(commentPort.findByPostId(TEST_ID))
+                .thenReturn(List.of(mockComment));
+
+        final var post = postService.getPost(TEST_ID);
+
+        Assertions.assertEquals(1, post.comments().size());
+        Assertions.assertEquals("test", post.author());
     }
 }
