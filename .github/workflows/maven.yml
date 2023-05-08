@@ -30,7 +30,7 @@ jobs:
     - name: Build with Maven
       run: cd blogcms && mvn --batch-mode -DskipTests package
     - name: Test
-      run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
+      run: cd blogcms && mvn --batch-mode -Dmaven.test.failure.ignore=true test
     - name: Report
       uses: dorny/test-reporter@v1
       if: always()
