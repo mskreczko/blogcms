@@ -28,7 +28,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn --batch-mode -DskipTests package
+      run: cd blogcms && mvn --batch-mode -DskipTests package
     - name: Test
       run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
     - name: Report
