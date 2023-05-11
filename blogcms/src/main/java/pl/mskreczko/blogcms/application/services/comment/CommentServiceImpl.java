@@ -54,4 +54,18 @@ class CommentServiceImpl implements CommentService {
                 .map((comment) -> new CommentDto(comment.getAuthor().getUsername(), comment.getContent(), comment.getCreatedAt()))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void changeLikesCount(UUID commentId, Integer countChange) {
+        var comment = commentPort.findById(commentId).orElseThrow(NoSuchEntityException::new);
+        comment.changeLikesCount(countChange);
+        commentPort.save(comment);
+    }
+
+    @Override
+    public void changeDislikesCount(UUID commentId, Integer countChange) {
+        var comment = commentPort.findById(commentId).orElseThrow(NoSuchEntityException::new);
+        comment.changeDislikesCount(countChange);
+        commentPort.save(comment);
+    }
 }

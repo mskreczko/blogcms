@@ -80,15 +80,55 @@ class CommentServiceTest {
                 () -> commentService.deleteComment(TEST_ID));
     }
 
-    //@Test
-    //void deleteComment_deletesComment() {
-    //    final var mockUser = new User(TEST_ID, "test");
-    //    final var mockPost = new Post(TEST_ID, mockUser, "Test title", "Test content");
-    //    final var mockComment = new Comment(TEST_ID, mockUser, mockPost, "test content");
+    @Test
+    void changeLikesCount_throwsIllegalArgumentException() {
+        var mockComment = new Comment(TEST_ID, null, null, "Test content");
+        Mockito.when(commentPort.findById(TEST_ID)).thenReturn(Optional.of(mockComment));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> commentService.changeLikesCount(TEST_ID, 0));
+    }
 
-    //    Mockito.when(commentPort.findById(TEST_ID))
-    //            .thenReturn(Optional.of(mockComment));
+    @Test
+    void changeDislikesCount_throwsIllegalArgumentException() {
+        var mockComment = new Comment(TEST_ID, null, null, "Test content");
+        Mockito.when(commentPort.findById(TEST_ID)).thenReturn(Optional.of(mockComment));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> commentService.changeDislikesCount(TEST_ID, 5));
+    }
 
-    //    Mockito.verify(commentPort).delete(mockComment);
-    //}
+    @Test
+    void changeLikesCount_throwsOnCommentLookup() {
+        Mockito.when(commentPort.findById(TEST_ID)).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(NoSuchEntityException.class,
+                () -> commentService.changeLikesCount(TEST_ID, 1));
+    }
+
+    @Test
+    void changeLikesCount_changesCount() {
+        var mockComment = new Comment(TEST_ID, null, null, "Test content");
+        Mockito.when(commentPort.findById(TEST_ID)).thenReturn(Optional.of(mockComment));
+
+        commentService.changeLikesCount(TEST_ID, 1);
+
+        Assertions.assertEquals(1, mockComment.getLikesCount());
+    }
+
+    @Test
+    void changeDislikesCount_changesCount() {
+        var mockComment = new Comment(TEST_ID, null, null, "Test content");
+        Mockito.when(commentPort.findById(TEST_ID)).thenReturn(Optional.of(mockComment));
+
+        commentService.changeDislikesCount(TEST_ID, -1);
+
+        Assertions.assertEquals(-1, mockComment.getDislikesCount());
+    }
+
+    @Test
+    void changeDislikesCount_throwsOnCommentLookup() {
+        Mockito.when(commentPort.findById(TEST_ID)).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(NoSuchEntityException.class,
+                () -> commentService.changeDislikesCount(TEST_ID, -1));
+    }
 }
