@@ -51,7 +51,8 @@ class CommentServiceImpl implements CommentService {
         }
 
         return commentPort.findByPostId(postId).stream()
-                .map((comment) -> new CommentDto(comment.getAuthor().getUsername(), comment.getContent(), comment.getCreatedAt()))
+                .map((comment) -> new CommentDto(comment.getAuthor().getUsername(), comment.getContent(), comment.getCreatedAt(),
+                        comment.getLikesCount(), comment.getDislikesCount()))
                 .collect(Collectors.toList());
     }
 
