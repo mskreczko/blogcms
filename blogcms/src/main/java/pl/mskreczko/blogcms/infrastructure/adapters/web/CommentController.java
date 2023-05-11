@@ -45,4 +45,28 @@ class CommentController {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
+
+    @PatchMapping("{commentId}/likes")
+    public ResponseEntity<?> changeLikesCount(@PathVariable("commentId") UUID commentId, @RequestParam("countChange") Integer countChange) {
+        try {
+            commentService.changeThumbsUpCount(commentId, countChange);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } catch (NoSuchEntityException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
+        }
+    }
+
+    @PatchMapping("{commentId}/dislikes")
+    public ResponseEntity<?> changeDislikesCount(@PathVariable("commentId") UUID commentId, @RequestParam("countChange") Integer countChange) {
+        try {
+            commentService.changeThumbsDownCount(commentId, countChange);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } catch (NoSuchEntityException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
+        }
+    }
 }

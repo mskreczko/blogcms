@@ -80,6 +80,58 @@ class CommentServiceTest {
                 () -> commentService.deleteComment(TEST_ID));
     }
 
+    @Test
+    void changeThumbsUpCount_throwsIllegalArgumentException() {
+        var mockComment = new Comment(TEST_ID, null, null, "Test content");
+        Mockito.when(commentPort.findById(TEST_ID)).thenReturn(Optional.of(mockComment));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> commentService.changeThumbsUpCount(TEST_ID, 0));
+    }
+
+    @Test
+    void changeThumbsDownCount_throwsIllegalArgumentException() {
+        var mockComment = new Comment(TEST_ID, null, null, "Test content");
+        Mockito.when(commentPort.findById(TEST_ID)).thenReturn(Optional.of(mockComment));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> commentService.changeThumbsDownCount(TEST_ID, 5));
+    }
+
+    @Test
+    void changeThumbsUpCount_throwsOnCommentLookup() {
+        Mockito.when(commentPort.findById(TEST_ID)).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(NoSuchEntityException.class,
+                () -> commentService.changeThumbsUpCount(TEST_ID, 1));
+    }
+
+    @Test
+    void changeThumbsUpCount_changesCount() {
+        var mockComment = new Comment(TEST_ID, null, null, "Test content");
+        Mockito.when(commentPort.findById(TEST_ID)).thenReturn(Optional.of(mockComment));
+
+        commentService.changeThumbsUpCount(TEST_ID, 1);
+
+        Assertions.assertEquals(1, mockComment.getLikesCount());
+    }
+
+    @Test
+    void changeThumbsDownCount_throwsOnCommentLookup() {
+        Mockito.when(commentPort.findById(TEST_ID)).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(NoSuchEntityException.class,
+                () -> commentService.changeThumbsDownCount(TEST_ID, -1));
+    }
+
+    @Test
+    void changeThumbsDownCount_changesCount() {
+        var mockComment = new Comment(TEST_ID, null, null, "Test content");
+        Mockito.when(commentPort.findById(TEST_ID)).thenReturn(Optional.of(mockComment));
+
+        commentService.changeThumbsDownCount(TEST_ID, -1);
+
+        Assertions.assertEquals(-1, mockComment.getDislikesCount());
+    }
+
     //@Test
     //void deleteComment_deletesComment() {
     //    final var mockUser = new User(TEST_ID, "test");

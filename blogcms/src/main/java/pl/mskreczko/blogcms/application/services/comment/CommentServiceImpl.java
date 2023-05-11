@@ -51,7 +51,22 @@ class CommentServiceImpl implements CommentService {
         }
 
         return commentPort.findByPostId(postId).stream()
-                .map((comment) -> new CommentDto(comment.getAuthor().getUsername(), comment.getContent(), comment.getCreatedAt()))
+                .map((comment) -> new CommentDto(comment.getAuthor().getUsername(), comment.getContent(),
+                        comment.getCreatedAt(), comment.getLikesCount(), comment.getDislikesCount()))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void changeThumbsUpCount(UUID commentId, Integer countChange) {
+        var comment = commentPort.findById(commentId).orElseThrow(NoSuchEntityException::new);
+        comment.changeThumbsUpCount(countChange);
+        commentPort.save(comment);
+    }
+
+    @Override
+    public void changeThumbsDownCount(UUID commentId, Integer countChange) {
+        var comment = commentPort.findById(commentId).orElseThrow(NoSuchEntityException::new);
+        comment.changeThumbsDownCount(countChange);
+        commentPort.save(comment);
     }
 }
