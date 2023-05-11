@@ -81,37 +81,6 @@ class CommentServiceTest {
     }
 
     @Test
-<<<<<<< HEAD
-    void changeThumbsUpCount_throwsIllegalArgumentException() {
-        var mockComment = new Comment(TEST_ID, null, null, "Test content");
-        Mockito.when(commentPort.findById(TEST_ID)).thenReturn(Optional.of(mockComment));
-        Assertions.assertThrows(IllegalArgumentException.class,
-                () -> commentService.changeThumbsUpCount(TEST_ID, 0));
-    }
-
-    @Test
-    void changeThumbsDownCount_throwsIllegalArgumentException() {
-        var mockComment = new Comment(TEST_ID, null, null, "Test content");
-        Mockito.when(commentPort.findById(TEST_ID)).thenReturn(Optional.of(mockComment));
-        Assertions.assertThrows(IllegalArgumentException.class,
-                () -> commentService.changeThumbsDownCount(TEST_ID, 5));
-    }
-
-    @Test
-    void changeThumbsUpCount_throwsOnCommentLookup() {
-        Mockito.when(commentPort.findById(TEST_ID)).thenReturn(Optional.empty());
-
-        Assertions.assertThrows(NoSuchEntityException.class,
-                () -> commentService.changeThumbsUpCount(TEST_ID, 1));
-    }
-
-    @Test
-    void changeThumbsUpCount_changesCount() {
-        var mockComment = new Comment(TEST_ID, null, null, "Test content");
-        Mockito.when(commentPort.findById(TEST_ID)).thenReturn(Optional.of(mockComment));
-
-        commentService.changeThumbsUpCount(TEST_ID, 1);
-=======
     void changeLikesCount_throwsIllegalArgumentException() {
         var mockComment = new Comment(TEST_ID, null, null, "Test content");
         Mockito.when(commentPort.findById(TEST_ID)).thenReturn(Optional.of(mockComment));
@@ -141,32 +110,8 @@ class CommentServiceTest {
         Mockito.when(commentPort.findById(TEST_ID)).thenReturn(Optional.of(mockComment));
 
         commentService.changeLikesCount(TEST_ID, 1);
->>>>>>> 96896ec (implement comment's likes and dislikes)
 
         Assertions.assertEquals(1, mockComment.getLikesCount());
-    }
-
-    @Test
-<<<<<<< HEAD
-    void changeThumbsDownCount_throwsOnCommentLookup() {
-        Mockito.when(commentPort.findById(TEST_ID)).thenReturn(Optional.empty());
-
-        Assertions.assertThrows(NoSuchEntityException.class,
-                () -> commentService.changeThumbsDownCount(TEST_ID, -1));
-    }
-
-    @Test
-    void changeThumbsDownCount_changesCount() {
-        var mockComment = new Comment(TEST_ID, null, null, "Test content");
-        Mockito.when(commentPort.findById(TEST_ID)).thenReturn(Optional.of(mockComment));
-
-        commentService.changeThumbsDownCount(TEST_ID, -1);
-=======
-    void changeDislikesCount_throwsOnCommentLookup() {
-        Mockito.when(commentPort.findById(TEST_ID)).thenReturn(Optional.empty());
-
-        Assertions.assertThrows(NoSuchEntityException.class,
-                () -> commentService.changeDislikesCount(TEST_ID, -1));
     }
 
     @Test
@@ -175,20 +120,15 @@ class CommentServiceTest {
         Mockito.when(commentPort.findById(TEST_ID)).thenReturn(Optional.of(mockComment));
 
         commentService.changeDislikesCount(TEST_ID, -1);
->>>>>>> 96896ec (implement comment's likes and dislikes)
 
         Assertions.assertEquals(-1, mockComment.getDislikesCount());
     }
 
-    //@Test
-    //void deleteComment_deletesComment() {
-    //    final var mockUser = new User(TEST_ID, "test");
-    //    final var mockPost = new Post(TEST_ID, mockUser, "Test title", "Test content");
-    //    final var mockComment = new Comment(TEST_ID, mockUser, mockPost, "test content");
+    @Test
+    void changeDislikesCount_throwsOnCommentLookup() {
+        Mockito.when(commentPort.findById(TEST_ID)).thenReturn(Optional.empty());
 
-    //    Mockito.when(commentPort.findById(TEST_ID))
-    //            .thenReturn(Optional.of(mockComment));
-
-    //    Mockito.verify(commentPort).delete(mockComment);
-    //}
+        Assertions.assertThrows(NoSuchEntityException.class,
+                () -> commentService.changeDislikesCount(TEST_ID, -1));
+    }
 }

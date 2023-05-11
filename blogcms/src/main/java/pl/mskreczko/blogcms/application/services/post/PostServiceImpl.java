@@ -52,7 +52,6 @@ class PostServiceImpl implements PostService {
 
         return new PostDto(post.getAuthor().getUsername(), post.getTitle(), post.getContent(),
                 comments.stream().map((comment) -> new CommentDto(comment.getAuthor().getUsername(),
-                        comment.getContent(), comment.getCreatedAt(), comment.getLikesCount(),
-                        comment.getDislikesCount())).collect(Collectors.toList()));
+                        comment.getContent(), comment.getCreatedAt())).collect(Collectors.toList()));
     }
 }

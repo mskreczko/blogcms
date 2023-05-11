@@ -35,14 +35,14 @@ public class Comment {
 
     private Integer dislikesCount = 0;
 
-    public void changeThumbsUpCount(Integer countChange) throws IllegalArgumentException {
+    public void changeLikesCount(Integer countChange) throws IllegalArgumentException {
         if (countChange != -1 && countChange != 1) {
             throw new IllegalArgumentException("countChange value is -1 or 1");
         }
         likesCount += countChange;
     }
 
-    public void changeThumbsDownCount(Integer countChange) throws IllegalArgumentException {
+    public void changeDislikesCount(Integer countChange) throws IllegalArgumentException {
         if (countChange != -1 && countChange != 1) {
             throw new IllegalArgumentException("countChange value is -1 or 1");
         }
