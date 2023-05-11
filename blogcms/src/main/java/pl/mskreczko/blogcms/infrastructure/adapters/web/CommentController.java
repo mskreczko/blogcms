@@ -49,7 +49,11 @@ class CommentController {
     @PatchMapping("{commentId}/likes")
     public ResponseEntity<?> changeLikesCount(@PathVariable("commentId") UUID commentId, @RequestParam("countChange") Integer countChange) {
         try {
+<<<<<<< HEAD
             commentService.changeThumbsUpCount(commentId, countChange);
+=======
+            commentService.changeLikesCount(commentId, countChange);
+>>>>>>> 96896ec (implement comment's likes and dislikes)
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } catch (NoSuchEntityException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -61,7 +65,11 @@ class CommentController {
     @PatchMapping("{commentId}/dislikes")
     public ResponseEntity<?> changeDislikesCount(@PathVariable("commentId") UUID commentId, @RequestParam("countChange") Integer countChange) {
         try {
+<<<<<<< HEAD
             commentService.changeThumbsDownCount(commentId, countChange);
+=======
+            commentService.changeDislikesCount(commentId, countChange);
+>>>>>>> 96896ec (implement comment's likes and dislikes)
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } catch (NoSuchEntityException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
