@@ -37,11 +37,15 @@ class PostController {
         }
     }
 
-    @GetMapping
+    @GetMapping("{postId}")
     public ResponseEntity<?> getPost(@PathVariable("postId") UUID postId) {
         try {
-            postService.getPost(postId);
-            return ResponseEntity.status(HttpStatus.OK).build();
+            return ResponseEntity.ok(postService.getPost(postId));
+        } catch (NoSuchEntityException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
     @GetMapping
     public ResponseEntity<?> getPostsByAuthor(@RequestParam("authorId") UUID authorId) {
         try {

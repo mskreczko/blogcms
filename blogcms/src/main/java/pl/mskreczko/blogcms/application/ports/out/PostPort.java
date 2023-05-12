@@ -11,7 +11,6 @@ import java.util.UUID;
 public interface PostPort {
     void save(Post post);
     Optional<Post> loadById(UUID id) throws NoSuchEntityException;
-
     List<Post> loadByPostAuthor(User user) throws NoSuchEntityException;
     void deleteById(UUID id);
 }
