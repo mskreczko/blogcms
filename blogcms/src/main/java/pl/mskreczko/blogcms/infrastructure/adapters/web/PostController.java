@@ -36,4 +36,14 @@ class PostController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
+
+    @GetMapping
+    public ResponseEntity<?> getPost(@PathVariable("postId") UUID postId) {
+        try {
+            postService.getPost(postId);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (NoSuchEntityException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 }
