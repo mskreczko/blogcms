@@ -42,6 +42,10 @@ class PostController {
         try {
             postService.getPost(postId);
             return ResponseEntity.status(HttpStatus.OK).build();
+    @GetMapping
+    public ResponseEntity<?> getPostsByAuthor(@RequestParam("authorId") UUID authorId) {
+        try {
+            return ResponseEntity.ok(postService.getPostsByAuthor(authorId));
         } catch (NoSuchEntityException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
