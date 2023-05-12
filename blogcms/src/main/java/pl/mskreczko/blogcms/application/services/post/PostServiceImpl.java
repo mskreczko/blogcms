@@ -12,6 +12,7 @@ import pl.mskreczko.blogcms.infrastructure.adapters.web.dto.CommentDto;
 import pl.mskreczko.blogcms.infrastructure.adapters.web.dto.PostDto;
 import pl.mskreczko.blogcms.infrastructure.config.uuid.UUIDProvider;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -54,5 +55,15 @@ class PostServiceImpl implements PostService {
                 comments.stream().map((comment) -> new CommentDto(comment.getAuthor().getUsername(),
                         comment.getContent(), comment.getCreatedAt(), comment.getLikesCount(),
                         comment.getDislikesCount())).collect(Collectors.toList()));
+    }
+
+    @Override
+    public List<PostDto> getPostsByAuthor(UUID authorId) throws NoSuchEntityException {
+        final var author = userPort.loadById(authorId).orElseThrow(NoSuchEntityException::new);
+        final var posts = postPort.loadByPostAuthor(author);
+        return posts.stream().map((post) -> new PostDto(post.getAuthor().getUsername(), post.getTitle(), post.getContent(),
+                commentPort.findByPostId(post.getId()).stream().map((comment) -> new CommentDto(
+                        comment.getAuthor().getUsername(), comment.getContent(), comment.getCreatedAt(),
+                        comment.getLikesCount(), comment.getDislikesCount())).collect(Collectors.toList()))).collect(Collectors.toList());
     }
 }

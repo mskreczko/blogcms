@@ -2,6 +2,7 @@ package pl.mskreczko.blogcms.application.services.comment;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.mskreczko.blogcms.application.domain.Comment;
 import pl.mskreczko.blogcms.application.exceptions.NoSuchEntityException;
 import pl.mskreczko.blogcms.application.ports.out.CommentPort;
@@ -57,6 +58,7 @@ class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    @Transactional
     public void changeLikesCount(UUID commentId, Integer countChange) {
         var comment = commentPort.findById(commentId).orElseThrow(NoSuchEntityException::new);
         comment.changeLikesCount(countChange);
@@ -64,6 +66,7 @@ class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    @Transactional
     public void changeDislikesCount(UUID commentId, Integer countChange) {
         var comment = commentPort.findById(commentId).orElseThrow(NoSuchEntityException::new);
         comment.changeDislikesCount(countChange);
