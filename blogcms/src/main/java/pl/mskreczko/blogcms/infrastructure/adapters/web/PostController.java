@@ -20,7 +20,7 @@ class PostController {
     @PostMapping
     public ResponseEntity<?> createPost(@RequestBody NewPostDto newPostDto) {
         try {
-            postService.createPost(newPostDto.authorId(), newPostDto.title(), newPostDto.content());
+            postService.createPost(newPostDto);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (NoSuchEntityException ex) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();

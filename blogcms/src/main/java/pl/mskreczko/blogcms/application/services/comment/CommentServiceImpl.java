@@ -7,8 +7,9 @@ import pl.mskreczko.blogcms.application.domain.Comment;
 import pl.mskreczko.blogcms.application.exceptions.NoSuchEntityException;
 import pl.mskreczko.blogcms.application.ports.out.CommentPort;
 import pl.mskreczko.blogcms.application.ports.out.PostPort;
-import pl.mskreczko.blogcms.application.ports.out.UserPort;
+import pl.mskreczko.blogcms.application.services.mappers.CommentMapper;
 import pl.mskreczko.blogcms.infrastructure.adapters.web.dto.CommentDto;
+import pl.mskreczko.blogcms.infrastructure.adapters.web.dto.NewCommentDto;
 import pl.mskreczko.blogcms.infrastructure.config.uuid.UUIDProvider;
 
 import java.util.List;
@@ -21,20 +22,16 @@ class CommentServiceImpl implements CommentService {
 
     private final CommentPort commentPort;
     private final PostPort postPort;
-    private final UserPort userPort;
     private final UUIDProvider uuidProvider;
+    private final CommentMapper commentMapper;
 
     @Override
-    public void createComment(UUID postId, UUID authorId, String content) throws NoSuchEntityException {
-        final var user = userPort.loadById(authorId).orElseThrow(NoSuchEntityException::new);
+    public void createComment(UUID postId, NewCommentDto newCommentDto) throws NoSuchEntityException {
         final var post = postPort.loadById(postId).orElseThrow(NoSuchEntityException::new);
 
-        Comment comment = new Comment();
+        Comment comment = commentMapper.newCommentDtoToComment(newCommentDto);
         comment.setId(uuidProvider.getUUID());
-        comment.setAuthor(user);
         comment.setPost(post);
-        comment.setContent(content);
-
         commentPort.save(comment);
     }
 
@@ -52,8 +49,7 @@ class CommentServiceImpl implements CommentService {
         }
 
         return commentPort.findByPostId(postId).stream()
-                .map((comment) -> new CommentDto(comment.getAuthor().getUsername(), comment.getContent(), comment.getCreatedAt(),
-                        comment.getLikesCount(), comment.getDislikesCount()))
+                .map(commentMapper::commentToCommentDto)
                 .collect(Collectors.toList());
     }
 

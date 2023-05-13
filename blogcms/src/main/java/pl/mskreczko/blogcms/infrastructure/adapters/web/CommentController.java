@@ -29,7 +29,7 @@ class CommentController {
     @PostMapping
     public ResponseEntity<?> createComment(@PathVariable("postId") UUID postId, @RequestBody NewCommentDto newCommentDto) {
         try {
-            commentService.createComment(postId, newCommentDto.authorId(), newCommentDto.content());
+            commentService.createComment(postId, newCommentDto);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (NoSuchEntityException ex) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
