@@ -2,6 +2,6 @@ package pl.mskreczko.blogcms.application.ports.in.comment;
 
 import java.util.UUID;
 
-public interface ChangeDislikesCountUseCase {
+public interface ChangeDislikesCount {
     void changeDislikesCount(UUID commentId, Integer countChange);
 }

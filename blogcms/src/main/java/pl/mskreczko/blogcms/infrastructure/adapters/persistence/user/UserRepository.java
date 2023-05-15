@@ -14,17 +14,14 @@ import java.util.UUID;
 public class UserRepository implements UserPort {
 
     private final SpringDataUserRepository repository;
-
     @Override
     public void save(User user) {
         repository.save(user);
     }
-
     @Override
     public Optional<User> loadById(UUID id) {
         return repository.findById(id);
     }
-
     @Override
     public Optional<User> loadByUsername(String username) {
         return repository.findByUsername(username);

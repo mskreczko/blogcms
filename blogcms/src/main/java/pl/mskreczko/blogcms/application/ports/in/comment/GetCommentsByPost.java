@@ -6,6 +6,6 @@ import pl.mskreczko.blogcms.infrastructure.adapters.web.dto.CommentDto;
 import java.util.List;
 import java.util.UUID;
 
-public interface GetCommentsByPostUseCase {
+public interface GetCommentsByPost {
     List<CommentDto> getCommentsByPost(UUID postId) throws NoSuchEntityException;
 }
