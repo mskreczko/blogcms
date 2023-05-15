@@ -1,9 +1,9 @@
 package pl.mskreczko.blogcms.application.services.post;
 
-import pl.mskreczko.blogcms.application.ports.in.post.CreatePostUseCase;
-import pl.mskreczko.blogcms.application.ports.in.post.DeletePostUseCase;
-import pl.mskreczko.blogcms.application.ports.in.post.GetPostUseCase;
-import pl.mskreczko.blogcms.application.ports.in.post.GetPostsByAuthorUseCase;
+import pl.mskreczko.blogcms.application.ports.in.post.CreatePost;
+import pl.mskreczko.blogcms.application.ports.in.post.DeletePost;
+import pl.mskreczko.blogcms.application.ports.in.post.GetPost;
+import pl.mskreczko.blogcms.application.ports.in.post.GetPostsByAuthor;
 
-public interface PostService extends CreatePostUseCase, DeletePostUseCase, GetPostUseCase, GetPostsByAuthorUseCase {
+public interface PostService extends CreatePost, DeletePost, GetPost, GetPostsByAuthor {
 }

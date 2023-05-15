@@ -4,6 +4,6 @@ import pl.mskreczko.blogcms.application.exceptions.NoSuchEntityException;
 
 import java.util.UUID;
 
-public interface DeleteCommentUseCase {
+public interface DeleteComment {
     void deleteComment(UUID commentId) throws NoSuchEntityException;
 }

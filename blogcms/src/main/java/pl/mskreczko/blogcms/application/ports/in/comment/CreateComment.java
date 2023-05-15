@@ -5,6 +5,6 @@ import pl.mskreczko.blogcms.infrastructure.adapters.web.dto.NewCommentDto;
 
 import java.util.UUID;
 
-public interface CreateCommentUseCase {
+public interface CreateComment {
     void createComment(UUID postId, NewCommentDto newCommentDto) throws NoSuchEntityException;
 }
