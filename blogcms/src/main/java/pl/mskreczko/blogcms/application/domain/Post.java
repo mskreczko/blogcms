@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -22,6 +23,12 @@ public class Post {
     private User author;
     private String content;
     private String title;
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    void createdAt() {
+        this.createdAt = LocalDateTime.now();
+    }
 
     public Post(UUID id, User author, String content, String title) {
         this.id = id;

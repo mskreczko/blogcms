@@ -32,6 +32,6 @@ class PostMapperImpl implements PostMapper{
     @Override
     public PostDto postToPostDto(Post post, List<Comment> comments) {
         return new PostDto(post.getAuthor().getUsername(), post.getTitle(), post.getContent(),
-                comments.stream().map(commentMapper::commentToCommentDto).collect(Collectors.toList()));
+                comments.stream().map(commentMapper::commentToCommentDto).collect(Collectors.toList()), post.getCreatedAt());
     }
 }
