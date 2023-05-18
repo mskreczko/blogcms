@@ -35,6 +35,8 @@ public class Comment {
 
     private Integer dislikesCount = 0;
 
+    @Version
+    private Long version;
     @PrePersist
     void createdAt() {
         this.createdAt = LocalDateTime.now();
