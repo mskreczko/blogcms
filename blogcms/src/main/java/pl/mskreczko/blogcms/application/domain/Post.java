@@ -24,7 +24,8 @@ public class Post {
     private String content;
     private String title;
     private LocalDateTime createdAt;
-
+    @Version
+    private Long version;
     @PrePersist
     void createdAt() {
         this.createdAt = LocalDateTime.now();
