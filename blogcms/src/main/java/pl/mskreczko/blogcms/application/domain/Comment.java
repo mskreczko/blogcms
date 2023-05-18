@@ -29,11 +29,16 @@ public class Comment {
 
     private String content;
 
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
 
     private Integer likesCount = 0;
 
     private Integer dislikesCount = 0;
+
+    @PrePersist
+    void createdAt() {
+        this.createdAt = LocalDateTime.now();
+    }
 
     public void changeLikesCount(Integer countChange) throws IllegalArgumentException {
         if (countChange != -1 && countChange != 1) {
